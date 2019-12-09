@@ -10,30 +10,29 @@ namespace AnimalShelter.Code.Classes
     {
         public Guid UniqueAnimalId { get; set; }
         public AnimalType AnimalType { get; }
-        public AnimalCriteria AnimalCriteria { get; }
+        public bool AnimalCanFly { get; set; }
 
         public Animal(AnimalType animalType)
         {
             UniqueAnimalId = Guid.NewGuid();
             AnimalType = animalType;
-            AnimalCriteria = ClassifyByCriteria(animalType);
+            SetPropertiesByType(animalType);
         }
 
-        private AnimalCriteria ClassifyByCriteria(AnimalType animalType)
+
+        private void SetPropertiesByType(AnimalType animalType)
         {
             switch (animalType)
             {
                 case AnimalType.Cat:
-                    return AnimalCriteria.AnimalsThatAreCats;
-
                 case AnimalType.Dog:
-                    return AnimalCriteria.AnimalsThatAreDogs;
+                case AnimalType.Snake:
+                    AnimalCanFly = false;
+                    break;
 
                 case AnimalType.Bird:
-                    return AnimalCriteria.AnimalsThatCanFly;
-
-                default:
-                    return AnimalCriteria.AllAnimals;
+                    AnimalCanFly = true;
+                    break;
             }
         }
     }

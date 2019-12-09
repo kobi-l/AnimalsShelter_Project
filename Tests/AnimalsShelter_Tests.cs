@@ -131,7 +131,7 @@ namespace AnimalShelter.Tests
         public void GetAnimals_GettingAllAnimals_ExpectedAnimals_10()
         {
             // Act
-            var getAnimals = Animals().GetAllAnimals();
+            var getAnimals = Animals().GetAnimalsByCriteria(AnimalCriteria.AllAnimals);
 
             // Assert
             getAnimals.Count.Should().Be(10);

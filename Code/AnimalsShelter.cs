@@ -46,17 +46,20 @@ namespace AnimalShelter.Code
         // A list of filtered animals from the animals stored in the shelter
         public List<IAnimal> GetAnimalsByCriteria(AnimalCriteria animalCriteria)
         {
-            return Animals.Values.Where(a => a.AnimalCriteria == animalCriteria).ToList();
-        }
+            switch (animalCriteria)
+            {
+                case AnimalCriteria.AnimalsThatAreCats:
+                    return Animals.Values.Where(a => a.AnimalType == AnimalType.Cat).ToList(); 
 
-        public List<IAnimal> GetAllAnimals()
-        {
-            var animalsList = new List<IAnimal>();
+                case AnimalCriteria.AnimalsThatAreDogs:
+                    return Animals.Values.Where(a => a.AnimalType == AnimalType.Dog).ToList();
 
-            foreach (var item in Animals)
-                animalsList.Add(item.Value);
+                case AnimalCriteria.AnimalsThatCanFly:
+                    return Animals.Values.Where(a => a.AnimalCanFly).ToList();
 
-            return animalsList;
+                default:
+                    return Animals.Values.ToList();
+            };
         }
 
         // RemoveAnimal method that takes animal object parameter removes it and returns a result object

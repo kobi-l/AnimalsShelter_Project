@@ -9,6 +9,6 @@ namespace AnimalShelter.Code.Interfaces
     {
         Guid UniqueAnimalId { get; }
         AnimalType AnimalType { get; }
-        AnimalCriteria AnimalCriteria { get; }
+        bool AnimalCanFly { get; }
     }
 }
