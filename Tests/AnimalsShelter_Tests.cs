@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AnimalShelter.Tests
@@ -66,7 +67,7 @@ namespace AnimalShelter.Tests
             var isSupported = Animals().IsAnimalSupported(animal);
 
             // Asser
-            isSupported.Should().BeTrue(because: "Dogs are not supported animals.");
+            isSupported.Should().BeTrue(because: "Dogs are supported animals.");
         }
 
         [TestMethod]
@@ -136,5 +137,126 @@ namespace AnimalShelter.Tests
             // Assert
             getAnimals.Count.Should().Be(10);
         }
+
+        [TestMethod]
+        public void RevomeAnimal_RemovingAnAnimalThatDoesntExist_ExpectedResultFALSE()
+        {
+            // Arrange
+            var notsupportedAnimal = new Animal(AnimalType.Bear);
+
+            // Act
+            var removeAnimal = Animals().RemoveAnimal(notsupportedAnimal);
+
+            // Assert
+            removeAnimal.IsResultSuccessful.Should().BeFalse();
+            removeAnimal.Message.Should().Be("Animal does not exist in the system.");
+        }
+
+        [TestMethod]
+        public void RemoveAnimal_RemovingExistingAnimalFromShelter_ExpectedResult_TRUE()
+        {
+            // Arrange
+            var shelter = Animals();
+            var existingAnimal = shelter.GetAnimalsByCriteria(AnimalCriteria.AnimalsThatCanFly).First();
+
+            // Act
+            var removeAnimal = shelter.RemoveAnimal(existingAnimal);
+
+            // Assert
+            removeAnimal.IsResultSuccessful.Should().BeTrue();
+            removeAnimal.Message.Should().Be(string.Empty);
+        }
+
+        [TestMethod]
+        public void RemoveAnimal_RemovingAnimalFromShelter_NullCheck()
+        {
+            // Arrange
+            var shelter = Animals();
+
+            // Act
+            var removeAnimal = shelter.RemoveAnimal(null);
+
+            // Assert
+            removeAnimal.IsResultSuccessful.Should().BeFalse();
+            removeAnimal.Message.Should().Be("Animal does not exist in the system.");
+        }
+
+        [TestMethod]
+        public void GetAnimalById_GettingByEmptyGuid_ExpectedResult_FALSE()
+        {
+            // Arrange
+            var shelter = Animals();
+
+            // Act
+            var result = shelter.GetAnimalById(Guid.Empty);
+
+            // Assert
+            result.IsResultSuccessful.Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void GetAnimalById_GettingByIdThatDoesntExist_ExpectedResult_FALSE()
+        {
+            // Arrange
+            var shelter = Animals();
+
+            // Act
+            var result = shelter.GetAnimalById(Guid.NewGuid());
+
+            // Assert
+            result.IsResultSuccessful.Should().BeFalse();
+            result.Message.Should().Be("Animal does not exist in the system.");
+        }
+
+        [TestMethod]
+        public void GetAnimalById_GettingByExistingValidId_ExpectedResult_TRUE()
+        {
+            // Arrange
+            var shelter = Animals();
+            var animal = shelter.GetAnimalsByCriteria(AnimalCriteria.AllAnimals).FirstOrDefault();
+
+            // Act
+            var result = shelter.GetAnimalById(animal?.UniqueAnimalId ?? Guid.Empty);
+
+            // Assert
+            result.Animal.UniqueAnimalId.Should().Be(animal.UniqueAnimalId);
+            result.IsResultSuccessful.Should().BeTrue();
+            result.Message.Should().Be(string.Empty);
+        }
+
+        [TestMethod]
+        public void GetAnimalById_GettingAnAnimalFromAnEmptyShelter_ExpectedResult_FALSE()
+        {
+            // Arrange
+            var newShelter = new AnimalsShelter();
+
+            // Act
+            var result = newShelter.GetAnimalById(Guid.NewGuid());
+
+            // Assert
+            result.IsResultSuccessful.Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void GetAnimalsByCriteria_GetAllAnimals_FromEmptyShelter_Expected_Zero()
+        {
+            // Arrange
+            var newShelter = new AnimalsShelter();
+            var animals = newShelter.GetAnimalsByCriteria(AnimalCriteria.AllAnimals);
+
+            // Assert
+            animals.Count.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void GetAnimalsByCriteria_GetAllCats_FromEmptyShelter_Expected_Zero()
+        {
+            // Arrange
+            var newShelter = new AnimalsShelter();
+            var animals = newShelter.GetAnimalsByCriteria(AnimalCriteria.AnimalsThatAreCats);
+
+            // Assert
+            animals.Count.Should().Be(0);
+        }        
     }
 }

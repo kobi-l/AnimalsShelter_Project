@@ -11,9 +11,13 @@ namespace AnimalShelter.Code
     public class AnimalsShelter
     {
         public Dictionary<Guid, IAnimal> Animals { get; set; }
-        public AnimalsShelter()
+        public AnimalsShelter() : this(new Dictionary<Guid, IAnimal>())
         {
-            Animals = new Dictionary<Guid, IAnimal>();
+        }
+
+        public AnimalsShelter(Dictionary<Guid, IAnimal> animals)
+        {
+            Animals = animals ?? throw new ArgumentNullException();
         }
 
         // AddAnimal method that takes an animal object parameter and returns a result object
@@ -36,11 +40,17 @@ namespace AnimalShelter.Code
         // Check if animal is supported (Cat, Dog, Bird, Snake)
         public bool IsAnimalSupported(IAnimal animal)
         {
-            if (animal.AnimalType != AnimalType.Cat && animal.AnimalType != AnimalType.Dog &&
-                animal.AnimalType != AnimalType.Bird && animal.AnimalType != AnimalType.Snake)
-                return false;
-            else
-                return true;
+            switch (animal.AnimalType)
+            {
+                case AnimalType.Cat:
+                case AnimalType.Dog:
+                case AnimalType.Bird:
+                case AnimalType.Snake:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
         // A list of filtered animals from the animals stored in the shelter
@@ -62,13 +72,13 @@ namespace AnimalShelter.Code
             };
         }
 
-        // RemoveAnimal method that takes animal object parameter removes it and returns a result object
+        // RemoveAnimal method that takes animal object parameter, removes it and returns a result object
         public AnimalResult RemoveAnimal(IAnimal animal)
         {
             var result = false;
             var message = string.Empty;
 
-            if (!Animals.ContainsKey(animal.UniqueAnimalId))
+            if (!Animals.ContainsKey(animal?.UniqueAnimalId ?? Guid.Empty)) // <-- sets Guid to empty if Animal is NULL
                 message = "Animal does not exist in the system.";
             else
             {
@@ -79,7 +89,7 @@ namespace AnimalShelter.Code
             return new AnimalResult(result, animal, message);
         }
 
-        // GetAnimaById that takes animal ID for its parameter and returns a result object
+        // GetAnimalById method that takes animal ID for its parameter and returns a result object
         public AnimalResult GetAnimalById(Guid animalId)
         {
             var result = false;

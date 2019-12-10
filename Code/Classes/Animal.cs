@@ -19,21 +19,26 @@ namespace AnimalShelter.Code.Classes
             SetPropertiesByType(animalType);
         }
 
-
-        private void SetPropertiesByType(AnimalType animalType)
+        private void SetPropertiesByType(AnimalType animalType) 
         {
-            switch (animalType)
-            {
-                case AnimalType.Cat:
-                case AnimalType.Dog:
-                case AnimalType.Snake:
-                    AnimalCanFly = false;
-                    break;
+            AnimalCanFly = (animalType == AnimalType.Bird);
 
-                case AnimalType.Bird:
-                    AnimalCanFly = true;
-                    break;
-            }
+            // Using Ternary operator:
+            //AnimalCanFly = animalType == AnimalType.Bird ? true : false;
+
+            // Using Switch statement:
+            //switch (animalType)
+            //{
+            //    case AnimalType.Cat:
+            //    case AnimalType.Dog:
+            //    case AnimalType.Snake:
+            //        AnimalCanFly = false;
+            //        break;
+
+            //    case AnimalType.Bird:
+            //        AnimalCanFly = true;
+            //        break;
+            //}
         }
     }
 }
