@@ -12,6 +12,7 @@ namespace AnimalShelter.Tests
     public class Animal_Tests
     {
         [TestMethod]
+        [Owner("JustinM")]
         public void AnimalCanFly_GetsSetToTRUE_WhenCreatingABird()
         {
             // Arrange
@@ -22,6 +23,8 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("JustinM")]
+
         public void AnimalCanFly_GetsSetToFalse_WhenCreatingAnAnimalThatIsNotABird()
         {
             // Arrange

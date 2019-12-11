@@ -45,6 +45,7 @@ namespace AnimalShelter.Tests
         #endregion
 
         [TestMethod]
+        [Owner("KobiL")]
         public void IsAnimalSupported_ReturnsFALSE_WhenPassingInNotSupportedAnimal()
         {
             // Arrange
@@ -58,6 +59,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void IsAnimalSupported_ReturnsTRUE_WhenPassingInSupportedAnimal()
         {
             // Arrange
@@ -71,6 +73,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void AddAnimal_AddingNotSupportedAnimal_DoesNotGetAddedToShelter()
         {
             // Arrange
@@ -85,6 +88,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void AddAnimal_AddingSupportedAnimal_GetsAddedToShelter()
         {
             // Arrange
@@ -99,6 +103,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimals_AllCatsReturned_WhenAskingForCats_ExpectedCats_3()
         {
             // Act
@@ -109,6 +114,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimals_AllDogsReturned_WhenAskingForDogs_ExpectedDog_4()
         {
             // Act
@@ -119,6 +125,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimals_AllAnimalsThatCanFly_ExpectedAnimals_2()
         {
             // Act
@@ -129,6 +136,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimals_GettingAllAnimals_ExpectedAnimals_10()
         {
             // Act
@@ -139,6 +147,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void RevomeAnimal_RemovingAnAnimalThatDoesntExist_ExpectedResultFALSE()
         {
             // Arrange
@@ -153,6 +162,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void RemoveAnimal_RemovingExistingAnimalFromShelter_ExpectedResult_TRUE()
         {
             // Arrange
@@ -168,6 +178,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void RemoveAnimal_RemovingAnimalFromShelter_NullCheck()
         {
             // Arrange
@@ -182,6 +193,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalById_GettingByEmptyGuid_ExpectedResult_FALSE()
         {
             // Arrange
@@ -195,6 +207,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalById_GettingByIdThatDoesntExist_ExpectedResult_FALSE()
         {
             // Arrange
@@ -209,6 +222,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalById_GettingByExistingValidId_ExpectedResult_TRUE()
         {
             // Arrange
@@ -225,6 +239,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalById_GettingAnAnimalFromAnEmptyShelter_ExpectedResult_FALSE()
         {
             // Arrange
@@ -238,6 +253,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalsByCriteria_GetAllAnimals_FromEmptyShelter_Expected_Zero()
         {
             // Arrange
@@ -249,6 +265,7 @@ namespace AnimalShelter.Tests
         }
 
         [TestMethod]
+        [Owner("KobiL")]
         public void GetAnimalsByCriteria_GetAllCats_FromEmptyShelter_Expected_Zero()
         {
             // Arrange
