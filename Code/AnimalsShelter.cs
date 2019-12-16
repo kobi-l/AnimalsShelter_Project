@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Code.Classes;
 using AnimalShelter.Code.Enums;
+using AnimalShelter.Code.Events;
 using AnimalShelter.Code.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,14 @@ namespace AnimalShelter.Code
 {
     public class AnimalsShelter
     {
+        // declare a delegare
+        public delegate void AnimalBeenAddedToShelter(IAnimal animal); // AnimalBeenAddedToShelter
+        public delegate void AnimalRemovedFromShelter(IAnimal animal);
+
+        // declare event of type delegate
+        public event AnimalBeenAddedToShelter AnimalBeenAddedToShelterEvent;
+        public event AnimalRemovedFromShelter AnimalRemovedFromShelterEvent;
+
         public Dictionary<Guid, IAnimal> Animals { get; set; }
         public AnimalsShelter() : this(new Dictionary<Guid, IAnimal>())
         {
@@ -26,11 +35,37 @@ namespace AnimalShelter.Code
             var result = false;
             var message = string.Empty;
 
+            //var worker = new ShelterAction();
+            //var animalList = new List<IAnimal>();
+
             if (!IsAnimalSupported(animal))
                 message = "Animal is not a supported animal.";
             else
             {
+                // call delegate method <-- RAISING AN EVENT!
+                //if (AnimalBeenAddedToShelterEvent != null)
+                    //AnimalBeenAddedToShelterEvent();
+
+                // OR like this: (null-conditional or 'elvis-operator')
+                AnimalBeenAddedToShelterEvent?.Invoke(animal);
+                // ??
+                //AnimalBeenAddedToShelterEvent?.Invoke(animal);
+
+                // Add animal by Id
                 Animals.Add(animal.UniqueAnimalId, animal);
+
+
+
+                // And Raise an Event!!!
+                //var args = new ShelterActionEventArgs(animal);
+                //EventHandler<ShelterActionEventArgs> eventHandler = AnimalNeedsBath;
+                //eventHandler(this, args);
+
+                // Are these for listen to an Event?
+                //worker.AnimalNeedsBath += (object sender, ShelterActionEventArgs e) => animalList.Add(animal);
+                //worker.AnimalBeenBathed += (object sender, EventArgs e) => animalList.Remove(animal);
+                //worker.DoBathWork(animal);
+
                 result = true;
             }
 
@@ -84,6 +119,8 @@ namespace AnimalShelter.Code
             {
                 Animals.Remove(animal.UniqueAnimalId);
                 result = true;
+
+                AnimalRemovedFromShelterEvent?.Invoke(animal);
             }
 
             return new AnimalResult(result, animal, message);

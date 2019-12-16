@@ -45,7 +45,7 @@ namespace AnimalShelter.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExceptionWasThrownUsingThe_ExpectedException()
         {
-            new AnimalsShelter();
+            new AnimalsShelter(null);
 
             Assert.Fail("Exception wasn't thrown.");
         }
@@ -59,7 +59,7 @@ namespace AnimalShelter.Tests
         {
             try
             {
-                new AnimalsShelter(); // run with NULL parameter to get an exception
+                new AnimalsShelter(null); // run with NULL parameter to get an exception
             }
             catch (ArgumentNullException)
             {
